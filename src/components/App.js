@@ -9,7 +9,7 @@ class LoanCalculator extends Component {
     constructor(props)
     {
         super(props);
-      
+
         this.state={
             monthlypaymentamount: undefined,
             interestrate: undefined,
@@ -19,12 +19,12 @@ class LoanCalculator extends Component {
             principalcurrency: undefined,
             error: "error",
             
-            valueAmount: this.props.valueA,
+          //  valueAmount: this.props.valueA,
             stepAmount: this.props.stepA,
             maxAmount: this.props.maxA,
             minAmount: this.props.minA,
 
-            valueDuration: this.props.valueD,
+            //valueDuration: this.props.valueD,
             stepDuration: this.props.stepD,
             maxDuration: this.props.maxD,
             minDuration: this.props.minD,
@@ -67,11 +67,11 @@ class LoanCalculator extends Component {
         this.getWeather(changedID,value)
     }
    
-        getWeather = async (changedID,value) => {
+        getWeather = async (id,value) => {
          // e.preventDefault();
-         let amount = 500;
-         let duration= 6;
-         
+         //let amount=500;
+         //let duration=6;
+         /*
          if (changedID === 'sliderAmount')
          {
         amount = value;
@@ -79,7 +79,30 @@ class LoanCalculator extends Component {
         if (changedID === 'sliderDuration')
         {
          duration= value;
+        }*/
+
+        let amount, duration;
+       
+       
+        if (id === 'sliderDuration') {
+            duration = parseFloat(value);
+            amount = parseFloat(this.state.principalamount);
         }
+       
+        else if (id === 'sliderAmount'){
+            amount = parseFloat(value);
+            duration = parseFloat(this.state.monthsduration);
+        }
+        
+        else {
+            amount = parseFloat(this.state.principalamount);
+            duration = parseFloat(this.state.monthsduration);
+        }
+
+
+
+
+
           const api_call = await fetch(`http://ftl-frontend-test.herokuapp.com/interest?amount=${amount}&numMonths=${duration}`);
        
           const data = await api_call.json();
@@ -89,8 +112,8 @@ class LoanCalculator extends Component {
           monthlypaymentamount: data.monthlyPayment.amount,
           interestrate: data.interestRate,
           monthlypaymentcurrency: data.monthlyPayment.currency,
-          monthsduration: data.numPayments,
-          principalamount: data.principal.amount,
+         // monthsduration: data.numPayments,
+         // principalamount: data.principal.amount,
           principalcurrency: data.principal.currency,
           error: ""
         });
@@ -124,7 +147,7 @@ class LoanCalculator extends Component {
                     <Form horizontal>
                      
                             <SliderAmount
-                                value={this.state.valueAmount}
+                                value={this.state.principalamount}
                                 min={this.state.minAmount}
                                 max={this.state.maxAmount}
                                 onChange={this.update.bind(this)}
@@ -132,7 +155,7 @@ class LoanCalculator extends Component {
                                 currancy={this.props.currancy}
                             />
                             <SliderDuration
-                                value={this.state.valueDuration}
+                                value={this.state.monthsduration}
                                 min={this.state.minDuration}
                                 max={this.state.maxDuration}
                                 onChange={this.update.bind(this)}
@@ -161,12 +184,12 @@ class LoanCalculator extends Component {
 }
 
 LoanCalculator.defaultProps = {
-    valueD: 6,
+    //valueD: 6,
     stepD: 2,
     maxD: 24,
     minD: 6,
 
-    valueA : 500,
+  //  valueA : 500,
     stepA : 500,
     maxA : 5000,
     minA : 500,
