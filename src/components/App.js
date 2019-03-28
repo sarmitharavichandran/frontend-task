@@ -68,18 +68,7 @@ class LoanCalculator extends Component {
     }
    
         getWeather = async (id,value) => {
-         // e.preventDefault();
-         //let amount=500;
-         //let duration=6;
-         /*
-         if (changedID === 'sliderAmount')
-         {
-        amount = value;
-         }
-        if (changedID === 'sliderDuration')
-        {
-         duration= value;
-        }*/
+        
 
         let amount, duration;
        
@@ -138,7 +127,7 @@ class LoanCalculator extends Component {
         return(
             <Grid className="show-grid mainContainer">
                 <Row>
-                <Col className="logo" sm={12}>
+                <Col className="logo" sm={12} >
                          <center>LOAN CALCULATION</center>   <ion-icon name="globe"></ion-icon>
                         </Col>
                    <br></br>
